@@ -95,7 +95,7 @@ class RegisterController extends Controller
         ];
 
 //        dispatch(new RegisterUserEmailJob($info));
-        Mail::to($this->info['email'])->send(new RegisterForm($this->info));
+        Mail::to($info['email'])->send(new RegisterForm($info));
 
 
         return($user);

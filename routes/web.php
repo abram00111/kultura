@@ -20,3 +20,12 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::middleware('guest')->group(function (){
+    Route::get('/password/reset', [\App\Http\Controllers\Auth\PasswordController::class, 'showLinkRequestForm'])->name('forgot_form');
+    Route::post('/password/reset', [\App\Http\Controllers\Auth\PasswordController::class, 'forgot'])->name('forgot');
+});
+
+Route::middleware('auth')->group(function (){
+
+});
