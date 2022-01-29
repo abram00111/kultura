@@ -27,5 +27,6 @@ Route::middleware('guest')->group(function (){
 });
 
 Route::middleware('auth')->group(function (){
-
+    Route::get('/assess', [\App\Http\Controllers\AssessController::class, 'index'])->name('assess');
+    Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'index'])->name('admin')->middleware('statusUser');
 });

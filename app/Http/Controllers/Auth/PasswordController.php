@@ -36,5 +36,7 @@ class PasswordController extends Controller
 
         Mail::to($info['email'])->send(new ForgotPassword($info));
 
+        session()->flash('status', 'На Ваш Email "'.$info['email'].'" были отправлены данные для входа');
+        return redirect('/login');
     }
 }

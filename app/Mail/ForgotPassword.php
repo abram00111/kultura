@@ -29,7 +29,7 @@ class ForgotPassword extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.Forgot')->subject('asd')->with([
+        return $this->view('emails.Forgot')->subject('Восстановление пароля')->with([
             'info'=>$this->info
         ]);
     }
