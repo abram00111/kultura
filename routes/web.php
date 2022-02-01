@@ -31,5 +31,9 @@ Route::middleware('auth')->group(function (){
 
     Route::middleware('statusUser')->group(function (){
         Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'index'])->name('admin');
+        Route::get('/user', [\App\Http\Controllers\AdminController::class, 'user'])->name('user');
+        Route::post('/user/password', [\App\Http\Controllers\AdminController::class, 'passwordReset'])->name('passwordReset');
+        Route::post('/user/info', [\App\Http\Controllers\AdminController::class, 'userInfo'])->name('userInfo');
+        Route::post('/user/avatar', [\App\Http\Controllers\AdminController::class, 'editAvatar'])->name('editAvatar');
     });
 });

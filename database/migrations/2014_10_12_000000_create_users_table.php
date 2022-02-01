@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('fio');
             $table->string('short_fio');
+            $table->date('dob')->nullable();
             $table->string('login')->unique()->nullable();
             $table->string('password');
             $table->string('avatar')->default('user.jpg');

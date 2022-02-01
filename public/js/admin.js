@@ -46438,7 +46438,10 @@ __webpack_require__(/*! ../dist/js/adminlte.js */ "./resources/dist/js/adminlte.
 
 __webpack_require__(/*! ../plugins/chart.js/Chart.min.js */ "./resources/plugins/chart.js/Chart.min.js");
 
-__webpack_require__(/*! ../dist/js/pages/dashboard3.js */ "./resources/dist/js/pages/dashboard3.js");
+__webpack_require__(/*! ../dist/js/pages/dashboard3.js */ "./resources/dist/js/pages/dashboard3.js"); //прокручивание до якоря
+
+
+if ($('.anchor').length > 0) {}
 })();
 
 /******/ })()

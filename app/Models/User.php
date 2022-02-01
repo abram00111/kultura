@@ -21,6 +21,7 @@ class User extends Authenticatable
         'fio',
         'short_fio',
         'login',
+        'dob',
         'email',
         'status_id',
         'password',

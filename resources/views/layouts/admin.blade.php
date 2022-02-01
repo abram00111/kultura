@@ -71,6 +71,17 @@
                     <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
                 </div>
             </li>
+            <li class="nav-item">
+                <a style="vertical-align: middle" href="{{ route('logout') }}"
+                   onclick="event.preventDefault();
+                                                 document.getElementById('logout-form').submit();">
+                    {{ __('Выход') }}
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
+            </li>
         </ul>
     </nav>
     <!-- /.navbar -->
@@ -119,7 +130,8 @@
 
     <!-- Main Footer -->
     <footer class="main-footer">
-        <strong>Разработчик: Абрамов М.К. <a href="mailto:mk.abramov@yandex.ru">mk.abramov@yandex.ru</a>.</strong>
+        <strong>Разработчик: <a href="mailto:mk.abramov@yandex.ru"><i class="fas fa-at"></i> mk.abramov@yandex.ru</a> | <a
+                href="https://t.me/Abram0011"><i class="fab fa-telegram"></i> https://t.me/Abram0011</a>.</strong>
     </footer>
 </div>
 <!-- ./wrapper -->
