@@ -28,9 +28,14 @@
                                 <div class="col-sm-4">
                                     <!-- text input -->
                                     <div class="form-group">
-                                        <label>Пароль</label>
-                                        <input type="password" class="form-control" name="password"
+                                        <label>Новый пароль</label>
+                                        <input type="password" class="form-control @error('password') is-invalid @enderror" name="password"
                                                required autocomplete="off">
+                                        @error('password')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
@@ -39,7 +44,7 @@
                                     <!-- text input -->
                                     <div class="form-group">
                                         <label>Повторите пароль</label>
-                                        <input type="password" class="form-control" name="password_confirmation"
+                                        <input type="password" class="form-control @error('password') is-invalid @enderror" name="password_confirmation"
                                                required autocomplete="off">
                                     </div>
                                 </div>
@@ -177,7 +182,7 @@
                                                 aria-label="Default select example" name="class"
                                                 required>
                                             @for($i=1; $i<=11; $i++)
-                                                <option value="{{$i}}" <?php if(old('class')!=''){if(old('class') == $i){ echo 'selected';}}else{if(\Illuminate\Support\Facades\Auth::user()->class_bukva == $i){echo'selected';}}?>>{{$i}}</option>
+                                                <option value="{{$i}}" <?php if(old('class')!=''){if(old('class') == $i){ echo 'selected';}}else{if(\Illuminate\Support\Facades\Auth::user()->class == $i){echo'selected';}}?>>{{$i}}</option>
                                             @endfor
                                         </select>
                                         @error('class')
@@ -231,7 +236,7 @@
                                     <div class="form-group">
                                         <!-- <label for="customFile">Custom File</label> -->
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="customFile">
+                                            <input type="file" class="custom-file-input" id="customFile" required>
                                             <label class="custom-file-label" for="customFile">Загрузить фотографию</label>
                                         </div>
                                     </div>

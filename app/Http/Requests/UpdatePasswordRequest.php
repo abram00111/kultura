@@ -13,7 +13,7 @@ class UpdatePasswordRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return auth("web")->check();
     }
 
     /**
@@ -24,7 +24,7 @@ class UpdatePasswordRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'password' => ['required', 'string', 'min:4', 'confirmed'],
         ];
     }
 }

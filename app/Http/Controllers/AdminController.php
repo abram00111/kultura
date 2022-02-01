@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
 
@@ -22,6 +24,9 @@ class AdminController extends Controller
     }
 
     public function passwordReset(UpdatePasswordRequest $request){
+        $user = User::find(Auth::user()->id);
+        $user->password = Hash::make($request['password']);
+        $user->save();
         session()->flash('statusPassword', 'Пароль обновлен');
         session()->flash('anchorPassword', 'anchorPassword');
         return Redirect::to(url()->previous() . '#anchorPassword');
@@ -43,6 +48,17 @@ class AdminController extends Controller
         if($data['patronymic'] !=''){
             $short_fio .= substr($data['patronymic'],0,2).'.';
         }
+
+        $user = User::find(Auth::user()->id);
+        $user->fio = ucfirst($data['surname']).' '.ucfirst($data['name']).' '.ucfirst($data['patronymic']);
+        $user->short_fio = $short_fio;
+        $user->email = $data['email'];
+        $user->login = $data['login'];
+        $user->school_id = $data['school_id'];
+        $user->dob = $data['dob'];
+        $user->class = $data['class'];
+        $user->class_bukva = $data['class_bukva'];
+        $user->save();
 
 
         session()->flash('statusUser', 'Данные обновлены');
