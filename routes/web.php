@@ -21,6 +21,8 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::post('/login', [\App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');
+
 Route::middleware('guest')->group(function (){
     Route::get('/password/reset', [\App\Http\Controllers\Auth\PasswordController::class, 'showLinkRequestForm'])->name('forgot_form');
     Route::post('/password/reset', [\App\Http\Controllers\Auth\PasswordController::class, 'forgot'])->name('forgot');

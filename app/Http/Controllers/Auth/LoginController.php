@@ -7,7 +7,9 @@ use App\Http\Requests\LoginRequest;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -23,7 +25,7 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers;
+    use AuthenticatesUsers, ThrottlesLogins;
 
     /**
      * Where to redirect users after login.
@@ -44,6 +46,14 @@ class LoginController extends Controller
 
     public function login(LoginRequest $request)
     {
+        if (method_exists($this, 'hasTooManyLoginAttempts') &&
+            $this->hasTooManyLoginAttempts($request)) {
+            $this->fireLockoutEvent($request);
+
+            return $this->sendLockoutResponse($request);
+        }
+        $this->incrementLoginAttempts($request);
+
         $user = User::where('email', $request['email'])->count();
         $login = 'email';
         if($user == 0){
