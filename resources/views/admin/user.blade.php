@@ -229,24 +229,32 @@
                                 {{ session('statusImg') }}
                             </div>
                         @endif
-                        <form action="{{route('editAvatar')}}" method="post">
+                        <form action="{{route('editAvatar')}}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <!-- <label for="customFile">Custom File</label> -->
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="customFile" required>
+                                            <input type="file" class="custom-file-input @error('avatar')is-invalid @enderror" id="customFile" name="avatar" accept="image/*" required>
+                                            @error('avatar')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                             <label class="custom-file-label" for="customFile">Загрузить фотографию</label>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <button class="btn btn-danger">Удалить фотографию</button>
+                                        <button type="button" onclick="event.preventDefault(); document.getElementById('dell-avatar').submit()" class="btn btn-danger">Удалить фотографию</button>
                                         <button type="submit" class="btn btn-primary">Сохранить</button>
                                     </div>
                                 </div>
                             </div>
+                        </form>
 
+                        <form id="dell-avatar" action="{{route('editAvatar')}}" method="POST" class="d-none">
+                            @csrf
                         </form>
                     </div>
                 </div>

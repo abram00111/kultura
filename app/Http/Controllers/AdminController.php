@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateAvatarRequest;
 use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
@@ -9,7 +10,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
+use Intervention\Image\Facades\Image;
 
 class AdminController extends Controller
 {
@@ -65,8 +68,27 @@ class AdminController extends Controller
         session()->flash('anchorUser', 'anchorUser');
         return Redirect::to(url()->previous() . '#anchorUser');
     }
-    public function editAvatar(){
-        session()->flash('statusImg', 'Аватар изменен');
+
+    public function editAvatar(UpdateAvatarRequest $request){
+        if($request->hasFile('avatar')){
+            $image = $request->file('avatar');
+            $filename = Auth::id(). '.'. $image->getClientOriginalExtension();
+            $path = $image->move(Storage::path('/public/img/avatar/').'origin/',$filename);;
+
+            $mini = Image::make(Storage::path('/public/img/avatar/').'origin/'.$filename);
+            $mini->fit(100, 100);
+            $mini->save(Storage::path('/public/img/avatar/').'mini/'.$filename);
+
+            $user = User::find(Auth::id());
+            $user->avatar = $filename;
+            $user->save();
+            session()->flash('statusImg', 'Аватар изменен');
+        }else{
+            $user = User::find(Auth::id());
+            $user->avatar = 'user.jpg';
+            $user->save();
+            session()->flash('statusImg', 'Аватар удален');
+        }
         session()->flash('anchorImg', 'anchorImg');
         return Redirect::to(url()->previous() . '#anchorImg');
     }
