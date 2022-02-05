@@ -173,44 +173,49 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-sm-2">
-                                    <!-- text input -->
-                                    <div class="form-group">
-                                        <label>Класс</label>
-                                        <select class="form-control @error('class')is-invalid @enderror"
-                                                aria-label="Default select example" name="class"
-                                                required>
-                                            @for($i=1; $i<=11; $i++)
-                                                <option value="{{$i}}" <?php if(old('class')!=''){if(old('class') == $i){ echo 'selected';}}else{if(\Illuminate\Support\Facades\Auth::user()->class == $i){echo'selected';}}?>>{{$i}}</option>
-                                            @endfor
-                                        </select>
-                                        @error('class')
-                                        <span class="invalid-feedback" role="alert">
+                            @if(\Illuminate\Support\Facades\Auth::user()->status_id == 1)
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <!-- text input -->
+                                        <div class="form-group">
+                                            <label>Класс</label>
+                                            <select class="form-control @error('class')is-invalid @enderror"
+                                                    aria-label="Default select example" name="class"
+                                                    required>
+                                                @for($i=1; $i<=11; $i++)
+                                                    <option value="{{$i}}" <?php if(old('class')!=''){if(old('class') == $i){ echo 'selected';}}else{if(\Illuminate\Support\Facades\Auth::user()->class == $i){echo'selected';}}?>>{{$i}}</option>
+                                                @endfor
+                                            </select>
+                                            @error('class')
+                                            <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
-                                        @enderror
+                                            @enderror
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-sm-2">
-                                    <!-- text input -->
-                                    <div class="form-group">
-                                        <label>Буква</label>
-                                        <select class="form-control @error('class_bukva')is-invalid @enderror"
-                                                aria-label="Default select example" name="class_bukva"
-                                                 required>
-                                            @foreach(range(chr(0xC0), chr(0xDF)) AS $letter)
-                                                <option value="{{ iconv('CP1251', 'UTF-8', $letter) }}" <?php if(old('class_bukva')!=''){if(old('class_bukva') == iconv('CP1251', 'UTF-8', $letter)){ echo 'selected';}}else{if(\Illuminate\Support\Facades\Auth::user()->class_bukva == iconv('CP1251', 'UTF-8', $letter)){echo'selected';}}?>>{{ iconv('CP1251', 'UTF-8', $letter) }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('class_bukva')
-                                        <span class="invalid-feedback" role="alert">
+                                    <div class="col-sm-2">
+                                        <!-- text input -->
+                                        <div class="form-group">
+                                            <label>Буква</label>
+                                            <select class="form-control @error('class_bukva')is-invalid @enderror"
+                                                    aria-label="Default select example" name="class_bukva"
+                                                    required>
+                                                @foreach(range(chr(0xC0), chr(0xDF)) AS $letter)
+                                                    <option value="{{ iconv('CP1251', 'UTF-8', $letter) }}" <?php if(old('class_bukva')!=''){if(old('class_bukva') == iconv('CP1251', 'UTF-8', $letter)){ echo 'selected';}}else{if(\Illuminate\Support\Facades\Auth::user()->class_bukva == iconv('CP1251', 'UTF-8', $letter)){echo'selected';}}?>>{{ iconv('CP1251', 'UTF-8', $letter) }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('class_bukva')
+                                            <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
-                                        @enderror
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            @else
+                                <select class="form-control d-none" name="class"></select>
+                                <select class="form-control d-none" name="class_bukva"></select>
+                            @endif
                             <button class="btn btn-primary">Сохранить</button>
                         </form>
 
@@ -236,7 +241,8 @@
                                     <div class="form-group">
                                         <!-- <label for="customFile">Custom File</label> -->
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input @error('avatar')is-invalid @enderror" id="customFile" name="avatar" accept="image/*" required>
+                                            <input type="file" class="custom-file-input @error('avatar')is-invalid @enderror" id="customFile"  name="avatar" accept="image/*" required>
+                                            <img id="blah" src="#" alt="" style="width: 100px;">
                                             @error('avatar')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -246,7 +252,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <button type="button" onclick="event.preventDefault(); document.getElementById('dell-avatar').submit()" class="btn btn-danger">Удалить фотографию</button>
+                                        <button type="button" onclick="event.preventDefault(); document.getElementById('dell-avatar').submit()" class="btn btn-danger">Удалить аватар</button>
                                         <button type="submit" class="btn btn-primary">Сохранить</button>
                                     </div>
                                 </div>

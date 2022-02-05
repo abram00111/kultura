@@ -31,11 +31,14 @@ Route::middleware('guest')->group(function (){
 Route::middleware('auth')->group(function (){
     Route::get('/assess', [\App\Http\Controllers\AssessController::class, 'index'])->name('assess');
 
+    //Редактирование данных пользователя
+    Route::get('/user', [\App\Http\Controllers\AdminController::class, 'user'])->name('user');
+    Route::post('/user/password', [\App\Http\Controllers\AdminController::class, 'passwordReset'])->name('passwordReset');
+    Route::post('/user/info', [\App\Http\Controllers\AdminController::class, 'userInfo'])->name('userInfo');
+    Route::post('/user/avatar', [\App\Http\Controllers\AdminController::class, 'editAvatar'])->name('editAvatar');
+
     Route::middleware('statusUser')->group(function (){
         Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'index'])->name('admin');
-        Route::get('/user', [\App\Http\Controllers\AdminController::class, 'user'])->name('user');
-        Route::post('/user/password', [\App\Http\Controllers\AdminController::class, 'passwordReset'])->name('passwordReset');
-        Route::post('/user/info', [\App\Http\Controllers\AdminController::class, 'userInfo'])->name('userInfo');
-        Route::post('/user/avatar', [\App\Http\Controllers\AdminController::class, 'editAvatar'])->name('editAvatar');
+        Route::get('/school', [\App\Http\Controllers\AdminController::class, 'school'])->name('school');
     });
 });

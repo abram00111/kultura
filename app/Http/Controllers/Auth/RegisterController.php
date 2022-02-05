@@ -104,6 +104,7 @@ class RegisterController extends Controller
         $user->login = $id;
         $user->save();
 
+        //Отправим сообщение на email
         $url = ((!empty($_SERVER['HTTPS'])) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'];
         $info = [
             'password' => $data['password'],
@@ -112,8 +113,6 @@ class RegisterController extends Controller
             'server' => $url,
             'email' => $data['email'],
         ];
-
-//        dispatch(new RegisterUserEmailJob($info));
         Mail::to($info['email'])->send(new RegisterForm($info));
 
 

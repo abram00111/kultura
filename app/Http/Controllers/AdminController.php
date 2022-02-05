@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UpdateAvatarRequest;
 use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Mail\UserUpdate;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\URL;
 use Intervention\Image\Facades\Image;
 
 class AdminController extends Controller
@@ -32,6 +32,18 @@ class AdminController extends Controller
         $user->save();
         session()->flash('statusPassword', 'Пароль обновлен');
         session()->flash('anchorPassword', 'anchorPassword');
+
+        //Отправим сообщение на email
+        $url = ((!empty($_SERVER['HTTPS'])) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'];
+        $info = [
+            'password' => $request['password'],
+            'fio' => $user->fio,
+            'login' => $user->login,
+            'server' => $url,
+            'email' => $user->email,
+        ];
+        Mail::to($info['email'])->send(new UserUpdate($info));
+
         return Redirect::to(url()->previous() . '#anchorPassword');
     }
     public function userInfo(UpdateUserRequest $data){
@@ -63,9 +75,9 @@ class AdminController extends Controller
         $user->class_bukva = $data['class_bukva'];
         $user->save();
 
-
         session()->flash('statusUser', 'Данные обновлены');
         session()->flash('anchorUser', 'anchorUser');
+
         return Redirect::to(url()->previous() . '#anchorUser');
     }
 
@@ -91,5 +103,9 @@ class AdminController extends Controller
         }
         session()->flash('anchorImg', 'anchorImg');
         return Redirect::to(url()->previous() . '#anchorImg');
+    }
+
+    public function school(){
+        return view('school');
     }
 }

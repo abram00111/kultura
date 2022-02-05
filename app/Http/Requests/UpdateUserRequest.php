@@ -31,8 +31,6 @@ class UpdateUserRequest extends FormRequest
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.Auth::user()->id],
             'login' => ['required', 'string', 'max:255', 'unique:users,login,'.Auth::user()->id],
             'school_id' => ['required'],
-            'class' => ['required'],
-            'class_bukva' => ['required'],
         ];
     }
 }
