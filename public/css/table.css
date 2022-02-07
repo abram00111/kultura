@@ -1,3 +1,25 @@
+.abr-table {
+  margin-bottom: 30px;
+}
+
 .abr-search {
   text-align: right;
+}
+
+.abr-table thead tr th {
+  padding-right: 15px;
+  cursor: pointer;
+  position: relative;
+}
+
+.abr-table i.sort {
+  position: absolute;
+  right: 4px;
+  font-size: 18px;
+}
+
+.no-tr {
+  text-align: center;
+  font-weight: 800;
+  font-size: 18px;
 }
