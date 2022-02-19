@@ -46,6 +46,7 @@ class AdminController extends Controller
 
         return Redirect::to(url()->previous() . '#anchorPassword');
     }
+
     public function userInfo(UpdateUserRequest $data){
 
         if(!function_exists('mb_ucfirst')) {
